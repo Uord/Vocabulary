@@ -1,7 +1,7 @@
 
 # Vocabulary
 
-Scrape Vocabulary.com sites for list of words. You can also check word definition and sentence examples.
+Scrape [Vocabulary.com](https://www.vocabulary.com/) site for list of words. You can also check word definition and sentence examples.
 
 Implemented in Python with BeautifulSoup library.
 
