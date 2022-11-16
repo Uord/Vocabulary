@@ -7,8 +7,8 @@ class VocabularyList:
     """Vocabulary list class."""
 
     def __init__(self, url: str) -> None:
-        self.url = url
-        self.words = []
+        self.url: str = url
+        self.words: list[str] = []
         self.get_words()
 
     def __repr__(self) -> str:
@@ -51,9 +51,11 @@ class Word:
     """A class to represent a word."""
 
     def __init__(self, word: str) -> None:
-        self.word = word
-        self._url = f"https://www.vocabulary.com/dictionary/{self.word}"
-        self._soup = BeautifulSoup(requests.get(self.url).text, "html.parser")
+        self.word: str = word
+        self._url: str = f"https://www.vocabulary.com/dictionary/{self.word}"
+        self._soup: BeautifulSoup = BeautifulSoup(
+            requests.get(self.url).text, "html.parser"
+        )
 
     def __repr__(self) -> str:
         return f"Word({self.word})"
@@ -79,7 +81,7 @@ class Word:
         """Get long definition of a word."""
         return self.soup.find("p", class_="long").text
 
-    def get_examples(self) -> list:
+    def get_examples(self) -> list[str]:
         """Get example sentences containing the word."""
         examples = self.soup.find_all("div", class_="example")
         return [
@@ -90,3 +92,24 @@ class Word:
             + "."  # add a period at the end of the sentence
             for example in examples
         ]
+
+
+if __name__ == "__main__":
+    # Examples of use
+    url = "https://www.vocabulary.com/lists/165401"
+
+    word_list = VocabularyList(url)
+    print(word_list.words)
+    print()
+
+    print(f"Word: {Word('hello')}")
+    print(f"Short definition: {Word('hello').get_short_definition()}")
+    print(f"Long definition: {Word('hello').get_long_definition()}")
+    print(f"Examples: {Word('hello').get_examples()}")
+    print()
+
+    for word in word_list.words:
+        print(f"{Word(word)}: {Word(word).get_short_definition()}" + "\n")
+        time.sleep(
+            0.5
+        )  # sleep for half a second to avoid getting blocked by the website
